@@ -1,16 +1,30 @@
 import React from 'react';
-import NavBar from './components/NavBar';
-import Router from './components/Router';
-import { EmployeeContextProvider } from './context/EmployeeContext';
+import { BrowserRouter as Route, Routes } from 'react-router-dom';
+import Header from './Components/Header';
+import EmployeeList from './Components/EmployeeList';
+import EmployeeDetails from './Components/EmployeeDetails';
+import DataContextProvider from './Components/DataContextProvider';
+import Footer from './components/Footer';
 
-const App = () => {
+function App() {
   return (
-    <EmployeeContextProvider>
-      <NavBar />
-      <Router />
-    </EmployeeContextProvider>
+    <div>
+      <Header />
+      <Routes>
+        
+          <Route path="/" element={<Home/>} />
+          <Route path="/login" element={<Login/>} />
+          { <DataContextProvider/> }
+            <Route path="/employees" element={<EmployeeList/>} />
+            <Route path="/employees/:id" element={<EmployeeDetails/>} />
+          { <DataContextProvider/> }
+      
+       
+      </Routes>
+      <Footer />
+    </div>
   );
-};
+}
 
 export default App;
 

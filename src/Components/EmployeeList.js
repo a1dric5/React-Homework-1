@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-const EmployeeList = () => {
+function EmployeeList() {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://api.example.com/employees');
-        setEmployees(response.data);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    fetchData();
+ 
+    axios('https://api.example.com/employees')
+      .then((response) => setEmployees(response.data))
+      .catch((error) => console.log(error));
   }, []);
 
   return (
     <div>
       <h2>Employee List</h2>
-      {employees.map((employee) => (
-        <EmployeeCard key={employee.id} employee={employee} />
-      ))}
+      <ul>
+        {employees.map((employee) => (
+          <li key={employee.id}>
+            <Link to={`/employees/${employee.id}`}>{employee.name}</Link> - {employee.yearOfWork}
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
+}
 
 export default EmployeeList;
